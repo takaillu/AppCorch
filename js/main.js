@@ -53,6 +53,7 @@ const App = (() => {
       el.progressBar.style.transform = `scaleX(${progress})`;
     },
     onComplete() {
+      Beep.playLong();
       advance();
     },
     onCountdown() {
