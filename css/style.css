@@ -130,6 +130,53 @@ body {
   color: var(--text-muted);
 }
 
+/* Shots Setting */
+
+.shots-setting {
+  width: 100%;
+  max-width: 360px;
+  margin-top: 24px;
+}
+
+.shots-setting-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  text-align: center;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.shots-selector {
+  display: flex;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  gap: 4px;
+}
+
+.shots-btn {
+  flex: 1;
+  min-height: 44px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.shots-btn.active {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.shots-btn:active {
+  opacity: 0.65;
+}
+
 /* ── SCR-02: Practice ── */
 
 #screen-practice {

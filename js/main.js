@@ -8,10 +8,13 @@ const Storage = {
 };
 
 const App = (() => {
+  let selectedMaxShots = Storage.get('maxShots', 20);
+
   let state = {
     levelKey: null,
     currentYard: null,
     shots: 0,
+    maxShots: 20,
     history: [],
     practiceYards: new Set(),
     practiceStart: null,
@@ -26,6 +29,7 @@ const App = (() => {
       summary: document.getElementById('screen-summary')
     },
     levelBtns: document.querySelectorAll('.level-btn'),
+    shotsBtns: document.querySelectorAll('.shots-btn'),
     levelBadge: document.getElementById('level-badge'),
     shotCount: document.getElementById('shot-count'),
     yardNumber: document.getElementById('yard-number'),
@@ -50,6 +54,9 @@ const App = (() => {
     },
     onComplete() {
       advance();
+    },
+    onCountdown() {
+      Beep.play();
     }
   });
 
@@ -92,6 +99,11 @@ const App = (() => {
     updateShotCount();
     updateHistory();
 
+    if (state.maxShots > 0 && state.shots >= state.maxShots) {
+      endPractice();
+      return;
+    }
+
     const yard = pickYard();
     setYard(yard);
     timer.reset();
@@ -125,6 +137,7 @@ const App = (() => {
       levelKey,
       currentYard: null,
       shots: 0,
+      maxShots: selectedMaxShots,
       history: [],
       practiceYards: new Set(),
       practiceStart: Date.now(),
@@ -165,11 +178,26 @@ const App = (() => {
     showScreen('summary');
   }
 
+  function updateShotsBtns() {
+    el.shotsBtns.forEach(btn => {
+      btn.classList.toggle('active', parseInt(btn.dataset.shots, 10) === selectedMaxShots);
+    });
+  }
+
   function bindEvents() {
     el.levelBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         Speech.unlock();
+        Beep.unlock();
         startPractice(btn.dataset.level);
+      });
+    });
+
+    el.shotsBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedMaxShots = parseInt(btn.dataset.shots, 10);
+        Storage.set('maxShots', selectedMaxShots);
+        updateShotsBtns();
       });
     });
 
@@ -228,6 +256,7 @@ const App = (() => {
 
   function init() {
     bindEvents();
+    updateShotsBtns();
     showScreen('level');
   }
 

@@ -1,11 +1,13 @@
 class Timer {
-  constructor({ onTick, onComplete }) {
+  constructor({ onTick, onComplete, onCountdown }) {
     this.onTick = onTick;
     this.onComplete = onComplete;
+    this.onCountdown = onCountdown || null;
     this._durationMs = 30000;
     this._startTime = null;
     this._running = false;
     this._rafId = null;
+    this._beepedSecs = new Set();
   }
 
   get durationSec() {
@@ -15,6 +17,7 @@ class Timer {
   start() {
     this._startTime = Date.now();
     this._running = true;
+    this._beepedSecs = new Set();
     this._tick();
   }
 
@@ -29,6 +32,7 @@ class Timer {
   resume() {
     this._startTime = Date.now();
     this._running = true;
+    this._beepedSecs = new Set();
     this._tick();
   }
 
@@ -47,6 +51,15 @@ class Timer {
     const elapsed = Date.now() - this._startTime;
     const progress = Math.max(0, 1 - elapsed / this._durationMs);
     this.onTick(progress);
+    if (this.onCountdown) {
+      const remainingSec = (this._durationMs - elapsed) / 1000;
+      for (const n of [3, 2, 1]) {
+        if (remainingSec <= n && !this._beepedSecs.has(n)) {
+          this._beepedSecs.add(n);
+          this.onCountdown(n);
+        }
+      }
+    }
     if (progress <= 0) {
       this._running = false;
       this.onComplete();
