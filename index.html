@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="AppCorch">
+  <title>AppCorch</title>
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- SCR-01: レベル選択 -->
+  <div id="screen-level" class="screen">
+    <div class="screen-inner">
+      <div class="logo-area">
+        <h1 class="app-title">AppCorch</h1>
+        <p class="app-subtitle">アプローチ距離感トレーニング</p>
+      </div>
+      <div class="level-list">
+        <button class="level-btn" data-level="beginner">
+          <span class="level-name">初心者</span>
+          <span class="level-detail">6ヤード設定</span>
+        </button>
+        <button class="level-btn" data-level="intermediate">
+          <span class="level-name">中級者</span>
+          <span class="level-detail">13ヤード設定</span>
+        </button>
+        <button class="level-btn" data-level="advanced">
+          <span class="level-name">上級者</span>
+          <span class="level-detail">20ヤード設定</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCR-02: 練習画面 -->
+  <div id="screen-practice" class="screen">
+    <div class="practice-header">
+      <span id="level-badge" class="level-badge"></span>
+      <span id="shot-count" class="shot-count">0ショット</span>
+    </div>
+
+    <div class="yard-area">
+      <div id="yard-display" class="yard-display">
+        <span id="yard-number" class="yard-number">--</span>
+        <span class="yard-unit">ヤード</span>
+      </div>
+    </div>
+
+    <div class="timer-area">
+      <div class="timer-controls">
+        <button id="timer-minus" class="timer-adj-btn">－</button>
+        <span id="timer-duration" class="timer-duration">30秒</span>
+        <button id="timer-plus" class="timer-adj-btn">＋</button>
+      </div>
+      <div class="progress-bar-wrap">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+    </div>
+
+    <div class="history-area">
+      <ul id="history-list" class="history-list"></ul>
+    </div>
+
+    <div class="practice-footer">
+      <button id="btn-pause" class="ctrl-btn pause-btn">⏸ ポーズ</button>
+      <button id="btn-next" class="ctrl-btn next-btn">次へ ▶</button>
+      <button id="btn-end" class="ctrl-btn end-btn">終了</button>
+    </div>
+  </div>
+
+  <!-- SCR-03: サマリー -->
+  <div id="screen-summary" class="screen">
+    <div class="screen-inner">
+      <h2 class="summary-title">練習終了！</h2>
+      <div class="summary-stats">
+        <div class="stat-card">
+          <span class="stat-value" id="summary-shots">0</span>
+          <span class="stat-label">ショット</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="summary-time">0</span>
+          <span class="stat-label">分</span>
+        </div>
+      </div>
+      <div class="summary-yards-area">
+        <p class="summary-yards-title">練習したヤード</p>
+        <div id="summary-yards" class="summary-yards"></div>
+      </div>
+      <button id="btn-restart" class="restart-btn">もう一度</button>
+    </div>
+  </div>
+
+  <script src="js/levels.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
